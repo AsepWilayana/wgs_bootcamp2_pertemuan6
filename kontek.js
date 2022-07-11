@@ -1,11 +1,11 @@
-const readline = require("readline");
+// const readline = require("readline");
 const fs = require ("fs")
 
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
 
 //membuat folder data apabila tidak ada
 function buatFolder() {
@@ -23,38 +23,45 @@ function buatFile() {
     }
 }
 
-const question = (ask) => {
-    return new Promise((resolve, reject) => {
-        rl.question(ask, inputvariable => {
-            if (inputvariable) {
-                resolve(inputvariable);
-            } else {
-                resolve(question_name());
-            }
-        });
-    });
-};
+// const question = (ask) => {
+//     return new Promise((resolve, reject) => {
+//         rl.question(ask, inputvariable => {
+//             if (inputvariable) {
+//                 resolve(inputvariable);
+//             } else {
+//                 resolve(question_name());
+//             }
+//         });
+//     });
+// };
 
-const data = async() => {
-    buatFolder();
-    buatFile();
-   
-    const name = await question("What's your name?");
-    const email = await question("What's your email?");
-    const phone= await question("your mobile number?");
-    
+const save_context = (name, email, mobile) => {
     //data yg akan di masukan file contact
-    const contact = {name, phone, email};
+    const contact = {
+        name, 
+        email, 
+        mobile
+    };
     //tempat penyimpanan
     const file = fs.readFileSync('data/contacts.json','utf8');
+
     const contacts = JSON.parse(file);
+    let findData = contacts.findIndex(item => item.name == name);
+    //console.log(findData)
+    if(findData >= 0){
+        console.log('nama sudah ada');
+        return;
+    }
     //tambhakan ke file
     contacts.push(contact);
 
     fs. writeFileSync('data/contacts.json',JSON.stringify(contacts));
     console.log('terimakasih sudah memasukkan data');
     console.log(contacts);
-    rl.close();
-}
+    //rl.close();
+};
 
-module.exports = {data};
+
+
+
+module.exports = {buatFile, buatFolder, save_context};

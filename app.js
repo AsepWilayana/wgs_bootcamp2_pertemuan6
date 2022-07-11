@@ -1,10 +1,56 @@
 const readline = require("readline");
 const fs = require ("fs")
-const {data} = require ('./kontek');
+const {save_context, buatFile, buatFolder} = require ('./kontek');
+const yargs = require("yargs");
 
 
-const main = async () => {
-    data();
-};
+yargs.command({
+    command:'add',
+    describe: 'add new contact',
+    builder:{
+        name:{
+            describe:'Contact Name',
+            demandOption:true,
+            type:'string',
+        },
+        email:{
+            describe:'Contact Email',
+            demandOption:false,
+            type:'string',
+        },
+        mobile:{
+            describe:'Contact mobile',
+            demandOption:true,
+            type:'string',
+        },
+    },
+    handler(argv){
+        // const contact = {
+        //     name : argv.name,
+        //     email : argv.email,
+        //     mobile : argv.mobile,
+        // };
+        
+        // console.log(contact)
 
-main();
+        save_context(argv.name, argv.email, argv.mobile)
+    },
+    
+});
+
+yargs.parse();
+
+
+
+// const main = async() => {
+//     buatFolder();
+//     buatFile();
+//     
+//     // const name = await question("What's your name?");
+//     // const email = await question("What's your email?");
+//     // const phone= await question("your mobile number?");
+    
+    
+// }
+
+//main();
