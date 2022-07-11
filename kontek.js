@@ -38,7 +38,7 @@ const question = (ask) => {
 const data = async() => {
     buatFolder();
     buatFile();
-    
+   
     const name = await question("What's your name?");
     const email = await question("What's your email?");
     const phone= await question("your mobile number?");
